@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEX Bypass - API Key & Arcues Link</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Orbitron', monospace;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #00ffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 0 30px #00ffffcc;
+      user-select: none;
+    }
+    h1 {
+      margin-bottom: 15px;
+      font-size: 2rem;
+      text-align: center;
+      text-shadow: 0 0 15px #00ffffbb;
+    }
+    p.info {
+      font-size: 0.9rem;
+      color: #00cccc;
+      margin-bottom: 30px;
+      text-align: center;
+      line-height: 1.3;
+    }
+    label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 6px;
+      font-weight: 700;
+      color: #00ffff;
+      text-shadow: 0 0 6px #00ffffbb;
+    }
+    input[type="text"], input[type="url"] {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 1rem;
+      border-radius: 14px;
+      border: 2px solid #00fff7cc;
+      background: rgba(0,255,255,0.1);
+      color: #00f0ff;
+      box-shadow: inset 0 0 15px #00fff7cc;
+      margin-bottom: 25px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="url"]:focus {
+      border-color: #00ffff;
+      box-shadow: inset 0 0 25px #00ffffcc;
+    }
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #00f0ff, #0066ff);
+      color: #000;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 16px 0;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 30px #00f0ffcc;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 45px #00ccffee;
+    }
+    #result {
+      margin-top: 25px;
+      font-family: monospace;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #00ffef;
+      text-shadow: 0 0 10px #00fff7bb;
+      word-break: break-word;
+      min-height: 36px;
+      user-select: text;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Neo Bypass</h1>
+    <p class="info">
+      Enter your <strong>API Key</strong> (get it by completing Lootlabs/Linkvertise externally).<br />
+      Then enter your <strong>Arcues Link</strong> below.<br />
+      <em>API keys update every 48 hours, so get a new key when expired.</em>
+    </p>
+
+    <label for="apiKey">API Key</label>
+    <input type="text" id="apiKey" placeholder="Paste your API key here" autocomplete="off" />
+
+    <label for="arcuesLink">Arcues Link to Bypass</label>
+    <input type="url" id="arcuesLink" placeholder="Paste your Arcues/Linkvertise URL here" autocomplete="off" />
+
+    <button id="bypassBtn">Bypass</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const bypassBtn = document.getElementById('bypassBtn');
+    const apiKeyInput = document.getElementById('apiKey');
+    const arcuesInput = document.getElementById('arcuesLink');
+    const resultDiv = document.getElementById('result');
+
+    // Change this to your deployed backend API
+    const bypassApiUrl = 'https://your-project.vercel.app/api/bypass';
+
+    bypassBtn.addEventListener('click', async () => {
+      const apiKey = apiKeyInput.value.trim();
+      const arcuesLink = arcuesInput.value.trim();
+
+      resultDiv.textContent = '';
+      if (!apiKey) {
+        resultDiv.textContent = 'Please enter your API key.';
+        return;
+      }
+      if (!arcuesLink) {
+        resultDiv.textContent = 'Please enter the Arcues link to bypass.';
+        return;
+      }
+
+      resultDiv.textContent = 'Bypassing... please wait.';
+
+      try {
+        const resp = await fetch(bypassApiUrl, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ apiKey, arcuesLink }),
+        });
+
+        if (!resp.ok) {
+          resultDiv.textContent = `Server error: ${resp.status}`;
+          return;
+        }
+
+        const data = await resp.json();
+
+        if (data.result) {
+          resultDiv.textContent = `Success! Bypass URL:\n${data.result}`;
+        } else if (data.error) {
+          resultDiv.textContent = `Error: ${data.error}`;
+        } else {
+          resultDiv.textContent = 'Unknown response from server.';
+        }
+      } catch (e) {
+        resultDiv.textContent = 'Network error. Please try again later.';
+      }
+    });
+  </script>
+</body>
+</html>
