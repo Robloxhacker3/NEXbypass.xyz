@@ -4,10 +4,7 @@ const VALID_API_KEYS = [
   // add more keys as needed
 ];
 
-export default function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'FUCKING NIGGER ERROR  ' });
-  }
+
 
   const { apiKey, arcuesLink } = req.body || {};
 
