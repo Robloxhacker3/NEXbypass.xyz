@@ -1,6 +1,6 @@
 const VALID_API_KEYS = [
   // Put your valid API keys here or fetch from DB/file
-  "YOUR-STATIC-API-KEY-1234567890",
+  "UY-MM_X193173627293V"
   // add more keys as needed
 ];
 
