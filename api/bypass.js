@@ -6,7 +6,7 @@ const VALID_API_KEYS = [
 
 export default function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed, use POST' });
+    return res.status(405).json({ error: 'FUCKING NIGGER ERROR  ' });
   }
 
   const { apiKey, arcuesLink } = req.body || {};
