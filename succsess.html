@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>API Key - Success</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #00ffff;
+    font-family: 'Orbitron', monospace, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+    user-select: none;
+  }
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px #00ffffbb;
+  }
+  #apiKey {
+    font-size: 1.8rem;
+    background: rgba(0, 255, 255, 0.15);
+    padding: 20px 40px;
+    border-radius: 20px;
+    user-select: text;
+    cursor: pointer;
+    box-shadow: 0 0 20px #00ffffcc;
+    max-width: 80%;
+    word-break: break-word;
+    transition: background-color 0.3s ease;
+  }
+  #apiKey:hover {
+    background-color: rgba(0, 255, 255, 0.3);
+  }
+  #copyMsg {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #00ffea;
+    height: 24px;
+  }
+</style>
+</head>
+<body>
+  <h1>API Key</h1>
+  <div id="apiKey" title="Click to copy API key">YOUR-STATIC-API-KEY-1234567890</div>
+  <div id="copyMsg"></div>
+
+  <script>
+    const apiKeyDiv = document.getElementById('apiKey');
+    const copyMsg = document.getElementById('copyMsg');
+
+    apiKeyDiv.addEventListener('click', () => {
+      navigator.clipboard.writeText(apiKeyDiv.textContent).then(() => {
+        copyMsg.textContent = 'Copied to clipboard!';
+        setTimeout(() => { copyMsg.textContent = ''; }, 2500);
+      }).catch(() => {
+        copyMsg.textContent = 'Failed to copy. Please copy manually.';
+      });
+    });
+  </script>
+</body>
+</html>
